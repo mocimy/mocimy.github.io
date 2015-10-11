@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="https://mocimy.github.io/"/>
-  <updated>2015-09-11T22:19:38.298Z</updated>
+  <updated>2015-09-14T14:39:18.694Z</updated>
   <id>https://mocimy.github.io/</id>
   
   <author>
@@ -13,6 +13,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[PCL点云处理实践:从kinect读取点云]]></title>
+    <link href="https://mocimy.github.io/2015/09/14/PCL%E7%82%B9%E4%BA%91%E5%A4%84%E7%90%86%E5%AE%9E%E8%B7%B5-%E4%BB%8Ekinect%E8%AF%BB%E5%8F%96%E7%82%B9%E4%BA%91/"/>
+    <id>https://mocimy.github.io/2015/09/14/PCL点云处理实践-从kinect读取点云/</id>
+    <published>2015-09-14T13:56:57.000Z</published>
+    <updated>2015-09-14T14:39:18.694Z</updated>
+    <content type="html"><![CDATA[<h2 id="PCL介绍">PCL介绍</h2><p>Point Cloud Library (PCL) 是一个独立的大型的处理二维/三维图像和点云数据的开源工程。PCL在三维图像处理上的地位相当于opencv在二维图像处理的地位。<br>更多信息可查看PCL官网：<a href="http://pointclouds.org/" target="_blank" rel="external">http://pointclouds.org/</a></p>
+<h2 id="kinect介绍">kinect介绍</h2><p>Kinect是巨硬推出的一款体感外设。它可以帮助我们获取摄像头范围内的深度数据和彩色数据。</p>
+<h1 id="安装">安装</h1><blockquote>
+<p>对于kinect 1.0版本，推荐使用SensorKinect开源驱动。<br>对于kinect 2.0版本，不存在开源驱动，请使用Kinect SDK for Windows。</p>
+</blockquote>
+<p>这里使用Kinect SDK for Windows 2.0（以下简称sdk）。</p>
+<h2 id="安装sdk">安装sdk</h2><p><a href="https://dev.windows.com/en-us/kinect" target="_blank" rel="external">https://dev.windows.com/en-us/kinect</a></p>
+<h2 id="安装PCL">安装PCL</h2><p>推荐从源代码安装：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">"helloworld"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="PCL介绍">PCL介绍</h2><p>Point Cloud Library (PCL) 是一个独立的大型的处理二维/三维图像和点云数据的开源工程。PCL在三维图像处理上的地位相当于opencv在二维图像处理的地位。<br>更多信息可查看PCL官网：<a hre]]>
+    </summary>
+    
+      <category term="C/C++" scheme="https://mocimy.github.io/tags/C-C/"/>
+    
+      <category term="PCL" scheme="https://mocimy.github.io/tags/PCL/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Hello World]]></title>
