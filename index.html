@@ -167,6 +167,169 @@
           
           
             
+              <a class="post-title-link" href="/2015/10/11/PCL点云处理实践-三-点云的曲面重建、GUI显示/" itemprop="url">
+                PCL点云处理实践(三):点云的曲面重建、GUI显示
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-10-11T11:49:51+08:00" content="2015-10-11">
+            2015-10-11
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/10/11/PCL点云处理实践-三-点云的曲面重建、GUI显示/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/11/PCL点云处理实践-三-点云的曲面重建、GUI显示/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h1 id="曲面重建">曲面重建</h1><p>曲面重建可以为点云构建光滑的表面。这里介绍快速三角化方法和Poisson方法。</p>
+<h2 id="快速三角化">快速三角化</h2><p>贪婪投影三角化算法的步骤是先将有向点云投影到某一局部二维坐标平面内，再在坐标平面内进行平面内的三角化，再根据平面内三位点的拓扑连接关系获得一个三角网格曲面模型。</p>
+<h2 id="Poission算法">Poission算法</h2><p>Poisson算法可以进行闭包点云的曲面重建。关于Poisson算法的具体实现，可以参见<a href="https://github.com/atduskgreg/pcl-poisson-example" target="_blank" rel="external">这里</a>。</p>
+<h1 id="GUI显示">GUI显示</h1><p>Qt是跨平台C++图形用户界面应用程序开发框架。PCL包含了对Qt4、Qt5的支持。因此如果我们有构建图形化程序的需求的话，不妨使用Qt。</p>
+<h2 id="编译PCL的Qt组件">编译PCL的Qt组件</h2><p>PCL的Qt组件是QVTKWidget。不同版本的Qt对应的组件是不同的，因此应仔细查看PCL的编译选项。</p>
+<h2 id="使用方法">使用方法</h2></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/09/17/PCL点云处理实践-二-点云的处理和拼接/" itemprop="url">
+                PCL点云处理实践(二):点云的处理和拼接
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-09-17T20:42:31+08:00" content="2015-09-17">
+            2015-09-17
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/09/17/PCL点云处理实践-二-点云的处理和拼接/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/17/PCL点云处理实践-二-点云的处理和拼接/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h1 id="点云处理">点云处理</h1><h2 id="滤除背景">滤除背景</h2><p>我们获得的点云可能包含一部分背景的点云。要去除背景，只保留人体信息，最简单的方式是使用直通滤波器滤除较远点。这部分代码如下：<br><figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pcl::PassThrough<span class="variable">&lt;pcl::PointXYZ&gt;</span><span class="built_in">pass</span>;     //设置滤波器对象</span><br><span class="line"><span class="built_in">pass</span>.<span class="built_in">set</span>InputCloud(cloud);                //设置输入点云</span><br><span class="line"><span class="built_in">pass</span>.<span class="built_in">set</span>FilterFieldName(<span class="string">"z"</span>);             //设置过滤时所需要点云类型的z字段</span><br><span class="line"><span class="built_in">pass</span>.<span class="built_in">set</span>FilterLimits(<span class="number">0.0</span>,<span class="number">1.0</span>);           //设置在过滤字段上的范围</span><br><span class="line">//<span class="built_in">pass</span>.<span class="built_in">set</span>FilterLimitsNegative (true);     //设置保留范围内的还是过滤掉范围内的</span><br><span class="line"><span class="built_in">pass</span>.filter(*cloud_filtered);              //执行滤波，保存过滤结果在cloud_filtered</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>滤除背景也可以通过Kinect SDK实现，这部分可以参考SDK的“游戏者ID”。</p>
+</blockquote>
+<h2 id="移除离群点">移除离群点</h2><p>激光扫描通常会产生密度不均匀的点云数据集。另外，测量中的误差会产生稀疏的离群点，使效果更糟。因此对每个点的邻域进行一个统计分析，并修剪掉那些不符合一定标准的点。<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">pcl:</span><span class="symbol">:StatisticalOutlierRemoval&lt;pcl</span><span class="symbol">:</span><span class="symbol">:PointXYZ&gt;</span> sor;<span class="regexp">//</span> 创建滤波器对象</span><br><span class="line">sor.setInputCloud(cloud);                        <span class="regexp">//</span>设置呆滤波的点云</span><br><span class="line">sor.setMeanK(<span class="number">50</span>);                                <span class="regexp">//</span>设置在进行统计时考虑查询点邻近点数</span><br><span class="line">sor.setStddevMulThresh(<span class="number">1.0</span>);                    <span class="regexp">//</span>设置判断是否为离群点的阈值</span><br><span class="line">sor.filter(*cloud_filtered);                    <span class="regexp">//</span>执行滤波处理保存内点到cloud_filtered</span><br></pre></td></tr></table></figure></p>
+<h2 id="下采样">下采样</h2><p>为什么要进行下采样？</p>
+<p>Kinect直接得到的点云数据非常庞大，由于我们下一步要对其进行配准和拼接处理，如果不对点云进行适当精简，运算时间可能非常长。因此，要等效一个Point较少的点云，取代原始点云进行配准操作。</p>
+<p>PCL实现的VoxelGrid类通过输入的点云数据创建一个三维体素栅格（可把体素栅格想象为微小的空间三维立方体的集合），然后在每个体素（即，三维立方体）内，用体素中所有点的重心来近似显示体素中其他点，这样该体素就内所有点就用一个重心点最终表示，对于所有体素处理后得到过滤后的点云。<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">pcl:</span><span class="symbol">:VoxelGrid&lt;sensor_msgs</span><span class="symbol">:</span><span class="symbol">:PointCloud2&gt;sor</span>;  <span class="regexp">//</span>创建滤波对象</span><br><span class="line">sor.setInputCloud(cloud);                       <span class="regexp">//</span>设置需要过滤的点云给滤波对象</span><br><span class="line">sor.setLeafSize(<span class="number">0</span>.<span class="number">01</span>f,<span class="number">0</span>.<span class="number">01</span>f,<span class="number">0</span>.<span class="number">01</span>f);           <span class="regexp">//</span>设置滤波时创建的体素大小为<span class="number">1</span>cm立方体</span><br><span class="line">sor.filter(*cloud_filtered);                   <span class="regexp">//</span>执行滤波处理，存储输出cloud_filtered</span><br></pre></td></tr></table></figure></p>
+<h1 id="点云拼接">点云拼接</h1><h2 id="配准">配准</h2><h3 id="什么是配准">什么是配准</h3><p>配准是将一个点云找到与另一个点云相对应的部分，并得到两个点云之间的转换矩阵。</p>
+<p>配准之后,我们就可以将一个点云转换到另一个点云所在的坐标系内。在同一个坐标系内的点云可以进行拼接，形成一个更大的点云。</p>
+<p>PCL内置了许多配准算法迭代最近点对(ICP)算法，正态分布变换算法，随机一致采样(ransac)算法，等等。实际使用中，往往需要根据点云的特征选取合适的算法。本例中使用ransac算法。</p>
+<h3 id="如何提高配准的精确度">如何提高配准的精确度</h3><p>对于两个点云来说，提高精确度的方法是选取合适的算法、增加迭代次数、修改参数。</p>
+<p>实际配准中，我们可能要连续配准多个点云。这样，在两个点云匹配中出现的误差可能被放大。提供几种思路供尝试：</p>
+<blockquote>
+<ul>
+<li>第n个点云与第n+1个点云配准，得到转换矩阵。将第n-1个转换矩阵乘以这个转换矩阵，得到第n个转换矩阵。第n+1个点云乘以第n个转换矩阵，得到它投影到第1个点云所在坐标系的新点云。</li>
+<li>上一方法的改进策略:同时由第1个点云向后出发，第n个点云向后出发进行配准，最终重合。</li>
+<li>第n个点云与第n+1个点云配准，得到转换矩阵,并将第n+1个点云乘以转换矩阵，将得到的新点云替换第n+1个点云。</li>
+<li>第n个点云与第n+1个点云配准，得到转换矩阵,并将第n+1个点云乘以转换矩阵，将得到的新点云拼接上第n个点云，然后替换第n+1个点云。</li>
+</ul>
+</blockquote>
+<p>本例中采用第二种方法。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/09/14/PCL点云处理实践-从kinect读取点云/" itemprop="url">
                 PCL点云处理实践:从kinect读取点云
               </a>
@@ -212,7 +375,13 @@
 </blockquote>
 <p>这里使用Kinect SDK for Windows 2.0（以下简称sdk）。</p>
 <h2 id="安装sdk">安装sdk</h2><p><a href="https://dev.windows.com/en-us/kinect" target="_blank" rel="external">https://dev.windows.com/en-us/kinect</a></p>
-<h2 id="安装PCL">安装PCL</h2><p>推荐从源代码安装：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">"helloworld"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="安装PCL">安装PCL</h2><p>推荐从源代码安装：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/PointCloudLibrary/pcl</span><br></pre></td></tr></table></figure></p>
+<p>使用cmake针对所在的平台进行编译。<br>由于windows平台解决Library问题较为麻烦，也可以使用 <a href="http://unanancyowen.com/?p=1255&amp;lang=en" target="_blank" rel="external">All in one Installer</a>。</p>
+<h2 id="下载KinectGrabber">下载KinectGrabber</h2><p>sdk本身提供了丰富的API，便于开发者实现各种功能。如手势识别、骨骼识别等。我们在这里仅使用它的基础功能——读取深度数据，并转换为我们需要的点云。</p>
+<p><a href="https://github.com/UnaNancyOwen/KinectGrabber/tree/Kinect2Grabber/Sample/Sample" target="_blank" rel="external">KinectGrabber项目地址</a></p>
+<h1 id="使用">使用</h1><h2 id="使用Kinect2Grabber">使用Kinect2Grabber</h2><p>修改Sample.cpp，将扫描的点云保存为PCD文件，以便于后续处理：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">"stdafx.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Disable Error C4996 that occur when using Boost.Signals2.</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">ifdef</span> _DEBUG</span></span><br><span class="line">	<span class="preprocessor">#<span class="keyword">define</span> _SCL_SECURE_NO_WARNINGS</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">"kinect2_grabber.h"</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;pcl/visualization/cloud_viewer.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> _tmain( <span class="keyword">int</span> argc, _TCHAR* argv[] )</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// Create Cloud Viewer</span></span><br><span class="line">	pcl::visualization::<span class="function">CloudViewer <span class="title">viewer</span><span class="params">( <span class="string">"Point Cloud Viewer"</span> )</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Callback Function to be called when Updating Data</span></span><br><span class="line">	boost::function&lt;<span class="keyword">void</span>( <span class="keyword">const</span> pcl::PointCloud&lt;pcl::PointXYZRGB&gt;::ConstPtr&amp; )&gt; function =</span><br><span class="line">		[&amp;viewer]( <span class="keyword">const</span> pcl::PointCloud&lt;pcl::PointXYZRGB&gt;::ConstPtr &amp;cloud )&#123;</span><br><span class="line">		<span class="keyword">if</span>( !viewer.wasStopped() )&#123;</span><br><span class="line">			viewer.showCloud( cloud );</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Create Kinect2Grabber</span></span><br><span class="line">	pcl::Grabber* grabber = <span class="keyword">new</span> pcl::Kinect2Grabber();</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Regist Callback Function</span></span><br><span class="line">	grabber-&gt;registerCallback( function );</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Start Retrieve Data</span></span><br><span class="line">	grabber-&gt;start();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span>( !viewer.wasStopped() )&#123;</span><br><span class="line">		<span class="comment">// Input Key ( Exit ESC key )</span></span><br><span class="line">		<span class="keyword">if</span>( GetKeyState( VK_ESCAPE ) &lt; <span class="number">0</span> )&#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Stop Retrieve Data</span></span><br><span class="line">	grabber-&gt;stop();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="预览效果">预览效果</h2><p>PCL自带的pcl_viewer工具可以帮助我们查看pcd文件。<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pcl_viewer <span class="literal">result</span>.pcd</span><br></pre></td></tr></table></figure></p>
+<p>效果如下</p>
 </span>
         
       
@@ -343,7 +512,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">4</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -357,7 +526,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

@@ -28,7 +28,7 @@
 
 
 
-  <meta name="keywords" content="C/C++,PCL," />
+  <meta name="keywords" content="C/C++,PCL,Qt," />
 
 
 
@@ -39,25 +39,25 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="PCL介绍Point Cloud Library (PCL) 是一个独立的大型的处理二维/三维图像和点云数据的开源工程。PCL在三维图像处理上的地位相当于opencv在二维图像处理的地位。更多信息可查看PCL官网：http://pointclouds.org/
-kinect介绍Kinect是巨硬推出的一款体感外设。它可以帮助我们获取摄像头范围内的深度数据和彩色数据。
-安装
-对于kinect 1.0">
+<meta name="description" content="曲面重建曲面重建可以为点云构建光滑的表面。这里介绍快速三角化方法和Poisson方法。
+快速三角化贪婪投影三角化算法的步骤是先将有向点云投影到某一局部二维坐标平面内，再在坐标平面内进行平面内的三角化，再根据平面内三位点的拓扑连接关系获得一个三角网格曲面模型。
+Poission算法Poisson算法可以进行闭包点云的曲面重建。关于Poisson算法的具体实现，可以参见这里。
+GUI显示Qt是跨平台C">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PCL点云处理实践:从kinect读取点云">
-<meta property="og:url" content="https://mocimy.github.io/2015/09/14/PCL点云处理实践-从kinect读取点云/index.html">
+<meta property="og:title" content="PCL点云处理实践(三):点云的曲面重建、GUI显示">
+<meta property="og:url" content="https://mocimy.github.io/2015/10/11/PCL点云处理实践-三-点云的曲面重建、GUI显示/index.html">
 <meta property="og:site_name" content="Mocimy's Island">
-<meta property="og:description" content="PCL介绍Point Cloud Library (PCL) 是一个独立的大型的处理二维/三维图像和点云数据的开源工程。PCL在三维图像处理上的地位相当于opencv在二维图像处理的地位。更多信息可查看PCL官网：http://pointclouds.org/
-kinect介绍Kinect是巨硬推出的一款体感外设。它可以帮助我们获取摄像头范围内的深度数据和彩色数据。
-安装
-对于kinect 1.0">
-<meta property="og:updated_time" content="2015-09-14T15:10:16.975Z">
+<meta property="og:description" content="曲面重建曲面重建可以为点云构建光滑的表面。这里介绍快速三角化方法和Poisson方法。
+快速三角化贪婪投影三角化算法的步骤是先将有向点云投影到某一局部二维坐标平面内，再在坐标平面内进行平面内的三角化，再根据平面内三位点的拓扑连接关系获得一个三角网格曲面模型。
+Poission算法Poisson算法可以进行闭包点云的曲面重建。关于Poisson算法的具体实现，可以参见这里。
+GUI显示Qt是跨平台C">
+<meta property="og:updated_time" content="2015-10-11T06:45:43.264Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PCL点云处理实践:从kinect读取点云">
-<meta name="twitter:description" content="PCL介绍Point Cloud Library (PCL) 是一个独立的大型的处理二维/三维图像和点云数据的开源工程。PCL在三维图像处理上的地位相当于opencv在二维图像处理的地位。更多信息可查看PCL官网：http://pointclouds.org/
-kinect介绍Kinect是巨硬推出的一款体感外设。它可以帮助我们获取摄像头范围内的深度数据和彩色数据。
-安装
-对于kinect 1.0">
+<meta name="twitter:title" content="PCL点云处理实践(三):点云的曲面重建、GUI显示">
+<meta name="twitter:description" content="曲面重建曲面重建可以为点云构建光滑的表面。这里介绍快速三角化方法和Poisson方法。
+快速三角化贪婪投影三角化算法的步骤是先将有向点云投影到某一局部二维坐标平面内，再在坐标平面内进行平面内的三角化，再根据平面内三位点的拓扑连接关系获得一个三角网格曲面模型。
+Poission算法Poisson算法可以进行闭包点云的曲面重建。关于Poisson算法的具体实现，可以参见这里。
+GUI显示Qt是跨平台C">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -67,7 +67,7 @@ kinect介绍Kinect是巨硬推出的一款体感外设。它可以帮助我们�
   };
 </script>
 
-  <title> PCL点云处理实践:从kinect读取点云 | Mocimy's Island </title>
+  <title> PCL点云处理实践(三):点云的曲面重建、GUI显示 | Mocimy's Island </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -175,7 +175,7 @@ kinect介绍Kinect是巨硬推出的一款体感外设。它可以帮助我们�
           
           
             
-              PCL点云处理实践:从kinect读取点云
+              PCL点云处理实践(三):点云的曲面重建、GUI显示
             
           
         </h1>
@@ -184,8 +184,8 @@ kinect介绍Kinect是巨硬推出的一款体感外设。它可以帮助我们�
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-09-14T21:56:57+08:00" content="2015-09-14">
-            2015-09-14
+          <time itemprop="dateCreated" datetime="2015-10-11T11:49:51+08:00" content="2015-10-11">
+            2015-10-11
           </time>
         </span>
 
@@ -195,8 +195,8 @@ kinect介绍Kinect是巨硬推出的一款体感外设。它可以帮助我们�
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2015/09/14/PCL点云处理实践-从kinect读取点云/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/14/PCL点云处理实践-从kinect读取点云/" itemprop="commentsCount"></span>
+              <a href="/2015/10/11/PCL点云处理实践-三-点云的曲面重建、GUI显示/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/11/PCL点云处理实践-三-点云的曲面重建、GUI显示/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -210,21 +210,12 @@ kinect介绍Kinect是巨硬推出的一款体感外设。它可以帮助我们�
       
 
       
-        <span itemprop="articleBody"><h2 id="PCL介绍">PCL介绍</h2><p>Point Cloud Library (PCL) 是一个独立的大型的处理二维/三维图像和点云数据的开源工程。PCL在三维图像处理上的地位相当于opencv在二维图像处理的地位。<br>更多信息可查看PCL官网：<a href="http://pointclouds.org/" target="_blank" rel="external">http://pointclouds.org/</a></p>
-<h2 id="kinect介绍">kinect介绍</h2><p>Kinect是巨硬推出的一款体感外设。它可以帮助我们获取摄像头范围内的深度数据和彩色数据。</p>
-<h1 id="安装">安装</h1><blockquote>
-<p>对于kinect 1.0版本，推荐使用SensorKinect开源驱动。<br>对于kinect 2.0版本，不存在开源驱动，请使用Kinect SDK for Windows。</p>
-</blockquote>
-<p>这里使用Kinect SDK for Windows 2.0（以下简称sdk）。</p>
-<h2 id="安装sdk">安装sdk</h2><p><a href="https://dev.windows.com/en-us/kinect" target="_blank" rel="external">https://dev.windows.com/en-us/kinect</a></p>
-<h2 id="安装PCL">安装PCL</h2><p>推荐从源代码安装：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/PointCloudLibrary/pcl</span><br></pre></td></tr></table></figure></p>
-<p>使用cmake针对所在的平台进行编译。<br>由于windows平台解决Library问题较为麻烦，也可以使用 <a href="http://unanancyowen.com/?p=1255&amp;lang=en" target="_blank" rel="external">All in one Installer</a>。</p>
-<h2 id="下载KinectGrabber">下载KinectGrabber</h2><p>sdk本身提供了丰富的API，便于开发者实现各种功能。如手势识别、骨骼识别等。我们在这里仅使用它的基础功能——读取深度数据，并转换为我们需要的点云。</p>
-<p><a href="https://github.com/UnaNancyOwen/KinectGrabber/tree/Kinect2Grabber/Sample/Sample" target="_blank" rel="external">KinectGrabber项目地址</a></p>
-<h1 id="使用">使用</h1><h2 id="使用Kinect2Grabber">使用Kinect2Grabber</h2><p>修改Sample.cpp，将扫描的点云保存为PCD文件，以便于后续处理：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">"stdafx.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Disable Error C4996 that occur when using Boost.Signals2.</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">ifdef</span> _DEBUG</span></span><br><span class="line">	<span class="preprocessor">#<span class="keyword">define</span> _SCL_SECURE_NO_WARNINGS</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">"kinect2_grabber.h"</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;pcl/visualization/cloud_viewer.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> _tmain( <span class="keyword">int</span> argc, _TCHAR* argv[] )</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// Create Cloud Viewer</span></span><br><span class="line">	pcl::visualization::<span class="function">CloudViewer <span class="title">viewer</span><span class="params">( <span class="string">"Point Cloud Viewer"</span> )</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Callback Function to be called when Updating Data</span></span><br><span class="line">	boost::function&lt;<span class="keyword">void</span>( <span class="keyword">const</span> pcl::PointCloud&lt;pcl::PointXYZRGB&gt;::ConstPtr&amp; )&gt; function =</span><br><span class="line">		[&amp;viewer]( <span class="keyword">const</span> pcl::PointCloud&lt;pcl::PointXYZRGB&gt;::ConstPtr &amp;cloud )&#123;</span><br><span class="line">		<span class="keyword">if</span>( !viewer.wasStopped() )&#123;</span><br><span class="line">			viewer.showCloud( cloud );</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Create Kinect2Grabber</span></span><br><span class="line">	pcl::Grabber* grabber = <span class="keyword">new</span> pcl::Kinect2Grabber();</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Regist Callback Function</span></span><br><span class="line">	grabber-&gt;registerCallback( function );</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Start Retrieve Data</span></span><br><span class="line">	grabber-&gt;start();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span>( !viewer.wasStopped() )&#123;</span><br><span class="line">		<span class="comment">// Input Key ( Exit ESC key )</span></span><br><span class="line">		<span class="keyword">if</span>( GetKeyState( VK_ESCAPE ) &lt; <span class="number">0</span> )&#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Stop Retrieve Data</span></span><br><span class="line">	grabber-&gt;stop();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="预览效果">预览效果</h2><p>PCL自带的pcl_viewer工具可以帮助我们查看pcd文件。<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pcl_viewer <span class="literal">result</span>.pcd</span><br></pre></td></tr></table></figure></p>
-<p>效果如下</p>
-</span>
+        <span itemprop="articleBody"><h1 id="曲面重建">曲面重建</h1><p>曲面重建可以为点云构建光滑的表面。这里介绍快速三角化方法和Poisson方法。</p>
+<h2 id="快速三角化">快速三角化</h2><p>贪婪投影三角化算法的步骤是先将有向点云投影到某一局部二维坐标平面内，再在坐标平面内进行平面内的三角化，再根据平面内三位点的拓扑连接关系获得一个三角网格曲面模型。</p>
+<h2 id="Poission算法">Poission算法</h2><p>Poisson算法可以进行闭包点云的曲面重建。关于Poisson算法的具体实现，可以参见<a href="https://github.com/atduskgreg/pcl-poisson-example" target="_blank" rel="external">这里</a>。</p>
+<h1 id="GUI显示">GUI显示</h1><p>Qt是跨平台C++图形用户界面应用程序开发框架。PCL包含了对Qt4、Qt5的支持。因此如果我们有构建图形化程序的需求的话，不妨使用Qt。</p>
+<h2 id="编译PCL的Qt组件">编译PCL的Qt组件</h2><p>PCL的Qt组件是QVTKWidget。不同版本的Qt对应的组件是不同的，因此应仔细查看PCL的编译选项。</p>
+<h2 id="使用方法">使用方法</h2></span>
       
     </div>
 
@@ -236,6 +227,8 @@ kinect介绍Kinect是巨硬推出的一款体感外设。它可以帮助我们�
           
             <a href="/tags/PCL/" rel="tag">#PCL</a>
           
+            <a href="/tags/Qt/" rel="tag">#Qt</a>
+          
         </div>
       
 
@@ -243,13 +236,11 @@ kinect介绍Kinect是巨硬推出的一款体感外设。它可以帮助我们�
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/09/17/PCL点云处理实践-二-点云的处理和拼接/" rel="prev">PCL点云处理实践(二):点云的处理和拼接</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/09/12/hello-world/" rel="next">Hello World</a>
+              <a href="/2015/09/17/PCL点云处理实践-二-点云的处理和拼接/" rel="next">PCL点云处理实践(二):点云的处理和拼接</a>
             
           </div>
         </div>
@@ -297,8 +288,8 @@ kinect介绍Kinect是巨硬推出的一款体感外设。它可以帮助我们�
         
           <div class="comments" id="comments">
             
-              <div class="ds-thread" data-thread-key="2015/09/14/PCL点云处理实践-从kinect读取点云/"
-                   data-title="PCL点云处理实践:从kinect读取点云" data-url="https://mocimy.github.io/2015/09/14/PCL点云处理实践-从kinect读取点云/">
+              <div class="ds-thread" data-thread-key="2015/10/11/PCL点云处理实践-三-点云的曲面重建、GUI显示/"
+                   data-title="PCL点云处理实践(三):点云的曲面重建、GUI显示" data-url="https://mocimy.github.io/2015/10/11/PCL点云处理实践-三-点云的曲面重建、GUI显示/">
               </div>
             
           </div>
@@ -405,7 +396,7 @@ kinect介绍Kinect是巨硬推出的一款体感外设。它可以帮助我们�
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PCL介绍"><span class="nav-number">1.</span> <span class="nav-text">PCL介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kinect介绍"><span class="nav-number">2.</span> <span class="nav-text">kinect介绍</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number"></span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装sdk"><span class="nav-number">1.</span> <span class="nav-text">安装sdk</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装PCL"><span class="nav-number">2.</span> <span class="nav-text">安装PCL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载KinectGrabber"><span class="nav-number">3.</span> <span class="nav-text">下载KinectGrabber</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用"><span class="nav-number"></span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Kinect2Grabber"><span class="nav-number">1.</span> <span class="nav-text">使用Kinect2Grabber</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预览效果"><span class="nav-number">2.</span> <span class="nav-text">预览效果</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#曲面重建"><span class="nav-number">1.</span> <span class="nav-text">曲面重建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#快速三角化"><span class="nav-number">1.1.</span> <span class="nav-text">快速三角化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Poission算法"><span class="nav-number">1.2.</span> <span class="nav-text">Poission算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GUI显示"><span class="nav-number">2.</span> <span class="nav-text">GUI显示</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#编译PCL的Qt组件"><span class="nav-number">2.1.</span> <span class="nav-text">编译PCL的Qt组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法"><span class="nav-number">2.2.</span> <span class="nav-text">使用方法</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
