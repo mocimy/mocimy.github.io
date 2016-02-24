@@ -28,7 +28,7 @@
 
 
 
-  <meta name="keywords" content="C/C++,PCL,Qt," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -39,25 +39,26 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
 
 
-<meta name="description" content="曲面重建曲面重建可以为点云构建光滑的表面。这里介绍快速三角化方法和Poisson方法。
-快速三角化贪婪投影三角化算法的步骤是先将有向点云投影到某一局部二维坐标平面内，再在坐标平面内进行平面内的三角化，再根据平面内三位点的拓扑连接关系获得一个三角网格曲面模型。
-Poisson算法Poisson算法可以进行闭包点云的曲面重建。关于Poisson算法的具体实现，可以参见这里。
-GUI显示Qt是跨平台C+">
+<meta name="description" content="准备编写8086汇编程序需要Dos环境，我在Linux下使用了dosemu工具模拟dos环境。MASM是微软开发的汇编环境，这里使用了MASM 5.0版本。
+安装dosemu可以通过发行版自带的包管理工具安装。在Archlinux下：1# pacman -S dosemu
+运行一下dosemu：1$ dosemu
+此时还不能编译汇编程序。需要我们将下载到的MASM.exe LINK.exe拷贝到d">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PCL点云处理实践(三):点云的曲面重建、GUI显示">
-<meta property="og:url" content="https://mocimy.github.io/2015/10/11/PCL点云处理实践-三-点云的曲面重建、GUI显示/index.html">
+<meta property="og:title" content="Linux下配置8086汇编环境">
+<meta property="og:url" content="https://mocimy.github.io/2015/11/09/Linux下配置8086汇编环境/index.html">
 <meta property="og:site_name" content="Mocimy's Island">
-<meta property="og:description" content="曲面重建曲面重建可以为点云构建光滑的表面。这里介绍快速三角化方法和Poisson方法。
-快速三角化贪婪投影三角化算法的步骤是先将有向点云投影到某一局部二维坐标平面内，再在坐标平面内进行平面内的三角化，再根据平面内三位点的拓扑连接关系获得一个三角网格曲面模型。
-Poisson算法Poisson算法可以进行闭包点云的曲面重建。关于Poisson算法的具体实现，可以参见这里。
-GUI显示Qt是跨平台C+">
-<meta property="og:updated_time" content="2015-10-27T05:18:36.980Z">
+<meta property="og:description" content="准备编写8086汇编程序需要Dos环境，我在Linux下使用了dosemu工具模拟dos环境。MASM是微软开发的汇编环境，这里使用了MASM 5.0版本。
+安装dosemu可以通过发行版自带的包管理工具安装。在Archlinux下：1# pacman -S dosemu
+运行一下dosemu：1$ dosemu
+此时还不能编译汇编程序。需要我们将下载到的MASM.exe LINK.exe拷贝到d">
+<meta property="og:image" content="https://mocimy.github.io/images/test_1.png">
+<meta property="og:updated_time" content="2015-11-09T06:52:50.014Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PCL点云处理实践(三):点云的曲面重建、GUI显示">
-<meta name="twitter:description" content="曲面重建曲面重建可以为点云构建光滑的表面。这里介绍快速三角化方法和Poisson方法。
-快速三角化贪婪投影三角化算法的步骤是先将有向点云投影到某一局部二维坐标平面内，再在坐标平面内进行平面内的三角化，再根据平面内三位点的拓扑连接关系获得一个三角网格曲面模型。
-Poisson算法Poisson算法可以进行闭包点云的曲面重建。关于Poisson算法的具体实现，可以参见这里。
-GUI显示Qt是跨平台C+">
+<meta name="twitter:title" content="Linux下配置8086汇编环境">
+<meta name="twitter:description" content="准备编写8086汇编程序需要Dos环境，我在Linux下使用了dosemu工具模拟dos环境。MASM是微软开发的汇编环境，这里使用了MASM 5.0版本。
+安装dosemu可以通过发行版自带的包管理工具安装。在Archlinux下：1# pacman -S dosemu
+运行一下dosemu：1$ dosemu
+此时还不能编译汇编程序。需要我们将下载到的MASM.exe LINK.exe拷贝到d">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -67,7 +68,7 @@ GUI显示Qt是跨平台C+">
   };
 </script>
 
-  <title> PCL点云处理实践(三):点云的曲面重建、GUI显示 | Mocimy's Island </title>
+  <title> Linux下配置8086汇编环境 | Mocimy's Island </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -166,7 +167,7 @@ GUI显示Qt是跨平台C+">
           
           
             
-              PCL点云处理实践(三):点云的曲面重建、GUI显示
+              Linux下配置8086汇编环境
             
           
         </h1>
@@ -175,8 +176,8 @@ GUI显示Qt是跨平台C+">
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-10-11T11:49:51+08:00" content="2015-10-11">
-            2015-10-11
+          <time itemprop="dateCreated" datetime="2015-11-09T13:19:27+08:00" content="2015-11-09">
+            2015-11-09
           </time>
         </span>
 
@@ -194,39 +195,28 @@ GUI显示Qt是跨平台C+">
       
 
       
-        <span itemprop="articleBody"><h1 id="曲面重建">曲面重建</h1><p>曲面重建可以为点云构建光滑的表面。这里介绍快速三角化方法和Poisson方法。</p>
-<h2 id="快速三角化">快速三角化</h2><p>贪婪投影三角化算法的步骤是先将有向点云投影到某一局部二维坐标平面内，再在坐标平面内进行平面内的三角化，再根据平面内三位点的拓扑连接关系获得一个三角网格曲面模型。</p>
-<h2 id="Poisson算法">Poisson算法</h2><p>Poisson算法可以进行闭包点云的曲面重建。关于Poisson算法的具体实现，可以参见<a href="https://github.com/atduskgreg/pcl-poisson-example" target="_blank" rel="external">这里</a>。</p>
-<h1 id="GUI显示">GUI显示</h1><p>Qt是跨平台C++图形用户界面应用程序开发框架。PCL包含了对Qt4、Qt5的支持。因此如果我们有构建图形化程序的需求的话，不妨使用Qt。</p>
-<h2 id="编译PCL的Qt组件">编译PCL的Qt组件</h2><p>PCL的Qt组件是QVTKWidget。不同版本的Qt对应的组件是不同的，因此应仔细查看PCL的编译选项。</p>
-<h2 id="使用方法">使用方法</h2></span>
+        <span itemprop="articleBody"><h1 id="准备">准备</h1><p>编写8086汇编程序需要Dos环境，我在Linux下使用了dosemu工具模拟dos环境。<br>MASM是微软开发的汇编环境，这里使用了MASM 5.0版本。</p>
+<h1 id="安装">安装</h1><p>dosemu可以通过发行版自带的包管理工具安装。在Archlinux下：<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># pacman -S dosemu</span></span><br></pre></td></tr></table></figure></p>
+<p>运行一下dosemu：<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>dosemu</span><br></pre></td></tr></table></figure></p>
+<p>此时还不能编译汇编程序。需要我们将下载到的MASM.exe LINK.exe拷贝到dosemu的工作环境下：<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">cp</span> MASM.<span class="keyword">exe</span> LINK.<span class="keyword">exe</span> ~/.dosemu/drives/<span class="keyword">d</span>/bin/</span><br></pre></td></tr></table></figure></p>
+<h1 id="编译">编译</h1><p>再次执行dosemu,可以执行MASM编译代码。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MASM test_1<span class="class">.asm</span></span><br><span class="line">LINK test_1<span class="class">.obj</span></span><br><span class="line">test_1.exe</span><br></pre></td></tr></table></figure></p>
+<p>效果如下：<br><img src="/images/test_1.png" alt="效果图"></p>
+</span>
       
     </div>
 
     <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/C-C/" rel="tag">#C/C++</a>
-          
-            <a href="/tags/PCL/" rel="tag">#PCL</a>
-          
-            <a href="/tags/Qt/" rel="tag">#Qt</a>
-          
-        </div>
       
 
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/11/09/Linux下配置8086汇编环境/" rel="prev">Linux下配置8086汇编环境</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/09/17/PCL点云处理实践-二-点云的处理和拼接/" rel="next">PCL点云处理实践(二):点云的处理和拼接</a>
+              <a href="/2015/10/11/PCL点云处理实践-三-点云的曲面重建、GUI显示/" rel="next">PCL点云处理实践(三):点云的曲面重建、GUI显示</a>
             
           </div>
         </div>
@@ -337,7 +327,7 @@ GUI显示Qt是跨平台C+">
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#曲面重建"><span class="nav-text">曲面重建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#快速三角化"><span class="nav-text">快速三角化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Poisson算法"><span class="nav-text">Poisson算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GUI显示"><span class="nav-text">GUI显示</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#编译PCL的Qt组件"><span class="nav-text">编译PCL的Qt组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法"><span class="nav-text">使用方法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#准备"><span class="nav-text">准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译"><span class="nav-text">编译</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next use-motion theme-next-mist">
+<html class="theme-next use-motion theme-next-pisces">
 <head>
   
 
@@ -23,12 +23,12 @@
 
 
 
-<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.5.0"/>
 
 
 
 
-  <meta name="keywords" content="Hexo,next" />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -36,7 +36,7 @@
 
 
 
-  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
 
 
 <meta name="description">
@@ -52,8 +52,8 @@
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
-    scheme: 'Mist',
-    sidebar: 'post'
+    scheme: 'Pisces',
+    sidebar: '[object Object]'
   };
 </script>
 
@@ -72,15 +72,6 @@
   </div>
 <![endif]-->
   
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-67302778-1', 'auto');
-  ga('send', 'pageview');
-</script>
-
 
 
 
@@ -167,6 +158,73 @@
           
           
             
+              <a class="post-title-link" href="/2015/11/09/Linux下配置8086汇编环境/" itemprop="url">
+                Linux下配置8086汇编环境
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-11-09T13:19:27+08:00" content="2015-11-09">
+            2015-11-09
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h1 id="准备">准备</h1><p>编写8086汇编程序需要Dos环境，我在Linux下使用了dosemu工具模拟dos环境。<br>MASM是微软开发的汇编环境，这里使用了MASM 5.0版本。</p>
+<h1 id="安装">安装</h1><p>dosemu可以通过发行版自带的包管理工具安装。在Archlinux下：<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># pacman -S dosemu</span></span><br></pre></td></tr></table></figure></p>
+<p>运行一下dosemu：<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>dosemu</span><br></pre></td></tr></table></figure></p>
+<p>此时还不能编译汇编程序。需要我们将下载到的MASM.exe LINK.exe拷贝到dosemu的工作环境下：<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">cp</span> MASM.<span class="keyword">exe</span> LINK.<span class="keyword">exe</span> ~/.dosemu/drives/<span class="keyword">d</span>/bin/</span><br></pre></td></tr></table></figure></p>
+<h1 id="编译">编译</h1><p>再次执行dosemu,可以执行MASM编译代码。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MASM test_1<span class="class">.asm</span></span><br><span class="line">LINK test_1<span class="class">.obj</span></span><br><span class="line">test_1.exe</span><br></pre></td></tr></table></figure></p>
+<p>效果如下：<br><img src="/images/test_1.png" alt="效果图"></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/10/11/PCL点云处理实践-三-点云的曲面重建、GUI显示/" itemprop="url">
                 PCL点云处理实践(三):点云的曲面重建、GUI显示
               </a>
@@ -187,13 +245,6 @@
 
         
           
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/10/11/PCL点云处理实践-三-点云的曲面重建、GUI显示/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/11/PCL点云处理实践-三-点云的曲面重建、GUI显示/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
         
       </div>
     </header>
@@ -207,7 +258,7 @@
         
           <span itemprop="articleBody"><h1 id="曲面重建">曲面重建</h1><p>曲面重建可以为点云构建光滑的表面。这里介绍快速三角化方法和Poisson方法。</p>
 <h2 id="快速三角化">快速三角化</h2><p>贪婪投影三角化算法的步骤是先将有向点云投影到某一局部二维坐标平面内，再在坐标平面内进行平面内的三角化，再根据平面内三位点的拓扑连接关系获得一个三角网格曲面模型。</p>
-<h2 id="Poission算法">Poission算法</h2><p>Poisson算法可以进行闭包点云的曲面重建。关于Poisson算法的具体实现，可以参见<a href="https://github.com/atduskgreg/pcl-poisson-example" target="_blank" rel="external">这里</a>。</p>
+<h2 id="Poisson算法">Poisson算法</h2><p>Poisson算法可以进行闭包点云的曲面重建。关于Poisson算法的具体实现，可以参见<a href="https://github.com/atduskgreg/pcl-poisson-example" target="_blank" rel="external">这里</a>。</p>
 <h1 id="GUI显示">GUI显示</h1><p>Qt是跨平台C++图形用户界面应用程序开发框架。PCL包含了对Qt4、Qt5的支持。因此如果我们有构建图形化程序的需求的话，不妨使用Qt。</p>
 <h2 id="编译PCL的Qt组件">编译PCL的Qt组件</h2><p>PCL的Qt组件是QVTKWidget。不同版本的Qt对应的组件是不同的，因此应仔细查看PCL的编译选项。</p>
 <h2 id="使用方法">使用方法</h2></span>
@@ -259,13 +310,6 @@
         
 
         
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/09/17/PCL点云处理实践-二-点云的处理和拼接/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/17/PCL点云处理实践-二-点云的处理和拼接/" itemprop="commentsCount"></span>
-              </a>
-            </span>
           
         
       </div>
@@ -350,13 +394,6 @@
 
         
           
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/09/14/PCL点云处理实践-从kinect读取点云/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/14/PCL点云处理实践-从kinect读取点云/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
         
       </div>
     </header>
@@ -432,13 +469,6 @@
 
         
           
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/09/12/hello-world/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/12/hello-world/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
         
       </div>
     </header>
@@ -512,7 +542,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -544,24 +574,6 @@
 
         <div class="links-of-author motion-element">
           
-            
-              <span class="links-of-author-item">
-                <a href="https://github.com/mocimy" target="_blank">github</a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://plus.google.com/113834125274941786770" target="_blank">Google+</a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://www.facebook.com/liu.mocimy" target="_blank">facebook</a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="mailto:mocimy@gmail.com" target="_blank">Email</a>
-              </span>
-            
-          
         </div>
 
         
@@ -585,7 +597,7 @@
       <div class="footer-inner"> <div class="copyright" >
   
   &copy; &nbsp; 
-  <span itemprop="copyrightYear">2015</span>
+  <span itemprop="copyrightYear">2016</span>
   <span class="with-love">
     <i class="icon-next-heart"></i>
   </span>
@@ -599,7 +611,7 @@
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
+    NexT.Pisces
   </a>
 </div>
 
@@ -616,44 +628,29 @@
   
   
     
+    
 
   
-    
-  
 
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"mocimy"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-    
-     
 
-    
   
   
   <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.5.0"></script>
 
 
-  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/js/helpers.js?v=0.5.0"></script>
   
 
   <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
   <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
 
-  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+  <script type="text/javascript" src="/js/motion_global.js?v=0.5.0" id="motion.global"></script>
 
 
 
 
-  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.5.0"></script>
   <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
 
   

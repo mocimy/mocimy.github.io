@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="https://mocimy.github.io/"/>
-  <updated>2015-10-11T06:45:43.264Z</updated>
+  <updated>2015-11-09T06:52:50.014Z</updated>
   <id>https://mocimy.github.io/</id>
   
   <author>
@@ -15,14 +15,34 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[Linux下配置8086汇编环境]]></title>
+    <link href="https://mocimy.github.io/2015/11/09/Linux%E4%B8%8B%E9%85%8D%E7%BD%AE8086%E6%B1%87%E7%BC%96%E7%8E%AF%E5%A2%83/"/>
+    <id>https://mocimy.github.io/2015/11/09/Linux下配置8086汇编环境/</id>
+    <published>2015-11-09T05:19:27.000Z</published>
+    <updated>2015-11-09T06:52:50.014Z</updated>
+    <content type="html"><![CDATA[<h1 id="准备">准备</h1><p>编写8086汇编程序需要Dos环境，我在Linux下使用了dosemu工具模拟dos环境。<br>MASM是微软开发的汇编环境，这里使用了MASM 5.0版本。</p>
+<h1 id="安装">安装</h1><p>dosemu可以通过发行版自带的包管理工具安装。在Archlinux下：<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># pacman -S dosemu</span></span><br></pre></td></tr></table></figure></p>
+<p>运行一下dosemu：<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>dosemu</span><br></pre></td></tr></table></figure></p>
+<p>此时还不能编译汇编程序。需要我们将下载到的MASM.exe LINK.exe拷贝到dosemu的工作环境下：<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">cp</span> MASM.<span class="keyword">exe</span> LINK.<span class="keyword">exe</span> ~/.dosemu/drives/<span class="keyword">d</span>/bin/</span><br></pre></td></tr></table></figure></p>
+<h1 id="编译">编译</h1><p>再次执行dosemu,可以执行MASM编译代码。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MASM test_1<span class="class">.asm</span></span><br><span class="line">LINK test_1<span class="class">.obj</span></span><br><span class="line">test_1.exe</span><br></pre></td></tr></table></figure></p>
+<p>效果如下：<br><img src="/images/test_1.png" alt="效果图"></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="准备">准备</h1><p>编写8086汇编程序需要Dos环境，我在Linux下使用了dosemu工具模拟dos环境。<br>MASM是微软开发的汇编环境，这里使用了MASM 5.0版本。</p>
+<h1 id="安装">安装</h1><p>dosemu可以通过发]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[PCL点云处理实践(三):点云的曲面重建、GUI显示]]></title>
     <link href="https://mocimy.github.io/2015/10/11/PCL%E7%82%B9%E4%BA%91%E5%A4%84%E7%90%86%E5%AE%9E%E8%B7%B5-%E4%B8%89-%E7%82%B9%E4%BA%91%E7%9A%84%E6%9B%B2%E9%9D%A2%E9%87%8D%E5%BB%BA%E3%80%81GUI%E6%98%BE%E7%A4%BA/"/>
     <id>https://mocimy.github.io/2015/10/11/PCL点云处理实践-三-点云的曲面重建、GUI显示/</id>
     <published>2015-10-11T03:49:51.000Z</published>
-    <updated>2015-10-11T06:45:43.264Z</updated>
+    <updated>2015-10-27T05:18:36.980Z</updated>
     <content type="html"><![CDATA[<h1 id="曲面重建">曲面重建</h1><p>曲面重建可以为点云构建光滑的表面。这里介绍快速三角化方法和Poisson方法。</p>
 <h2 id="快速三角化">快速三角化</h2><p>贪婪投影三角化算法的步骤是先将有向点云投影到某一局部二维坐标平面内，再在坐标平面内进行平面内的三角化，再根据平面内三位点的拓扑连接关系获得一个三角网格曲面模型。</p>
-<h2 id="Poission算法">Poission算法</h2><p>Poisson算法可以进行闭包点云的曲面重建。关于Poisson算法的具体实现，可以参见<a href="https://github.com/atduskgreg/pcl-poisson-example" target="_blank" rel="external">这里</a>。</p>
+<h2 id="Poisson算法">Poisson算法</h2><p>Poisson算法可以进行闭包点云的曲面重建。关于Poisson算法的具体实现，可以参见<a href="https://github.com/atduskgreg/pcl-poisson-example" target="_blank" rel="external">这里</a>。</p>
 <h1 id="GUI显示">GUI显示</h1><p>Qt是跨平台C++图形用户界面应用程序开发框架。PCL包含了对Qt4、Qt5的支持。因此如果我们有构建图形化程序的需求的话，不妨使用Qt。</p>
 <h2 id="编译PCL的Qt组件">编译PCL的Qt组件</h2><p>PCL的Qt组件是QVTKWidget。不同版本的Qt对应的组件是不同的，因此应仔细查看PCL的编译选项。</p>
 <h2 id="使用方法">使用方法</h2>]]></content>
