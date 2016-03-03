@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Python," />
 
 
 
@@ -59,26 +59,20 @@
 
 
 
-<meta name="description" content="准备编写8086汇编程序需要Dos环境，我在Linux下使用了dosemu工具模拟dos环境。MASM是微软开发的汇编环境，这里使用了MASM 5.0版本。
-安装dosemu可以通过发行版自带的包管理工具安装。在Archlinux下：1# pacman -S dosemu
-运行一下dosemu：1$ dosemu
-此时还不能编译汇编程序。需要我们将下载到的MASM.exe LINK.exe拷贝到d">
+<meta name="description" content="介绍Web在过去的20年里大幅的改变了社会，但它的核心却改变的非常少。大多数系统仍遵循着Tim Berners-Lee 25年前制定的规则。特别的，大多数web服务器仍以和以前一样的方式处理同类的消息。本章将探索它们的实现方式。同时将探索开发者如何创建不需重写就可以添加新特性的软件系统。
+后台几乎Web上的每个程序都运行在被称为因特网协议(IP)的通信标准的家族上。家族的每个成员使用传输控制协议(">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux下配置8086汇编环境">
-<meta property="og:url" content="https://mocimy.github.io/2015/11/09/Linux下配置8086汇编环境/index.html">
+<meta property="og:title" content="A Simple Web Server (翻译文章)">
+<meta property="og:url" content="https://mocimy.github.io/2016/03/03/A-Simple-Web-Server-翻译文章/index.html">
 <meta property="og:site_name" content="Mocimy's Island">
-<meta property="og:description" content="准备编写8086汇编程序需要Dos环境，我在Linux下使用了dosemu工具模拟dos环境。MASM是微软开发的汇编环境，这里使用了MASM 5.0版本。
-安装dosemu可以通过发行版自带的包管理工具安装。在Archlinux下：1# pacman -S dosemu
-运行一下dosemu：1$ dosemu
-此时还不能编译汇编程序。需要我们将下载到的MASM.exe LINK.exe拷贝到d">
-<meta property="og:image" content="https://mocimy.github.io/images/test_1.png">
-<meta property="og:updated_time" content="2015-11-09T06:52:50.014Z">
+<meta property="og:description" content="介绍Web在过去的20年里大幅的改变了社会，但它的核心却改变的非常少。大多数系统仍遵循着Tim Berners-Lee 25年前制定的规则。特别的，大多数web服务器仍以和以前一样的方式处理同类的消息。本章将探索它们的实现方式。同时将探索开发者如何创建不需重写就可以添加新特性的软件系统。
+后台几乎Web上的每个程序都运行在被称为因特网协议(IP)的通信标准的家族上。家族的每个成员使用传输控制协议(">
+<meta property="og:image" content="http://aosabook.org/en/500L/web-server-images/http-response.png">
+<meta property="og:updated_time" content="2016-03-03T07:33:48.438Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Linux下配置8086汇编环境">
-<meta name="twitter:description" content="准备编写8086汇编程序需要Dos环境，我在Linux下使用了dosemu工具模拟dos环境。MASM是微软开发的汇编环境，这里使用了MASM 5.0版本。
-安装dosemu可以通过发行版自带的包管理工具安装。在Archlinux下：1# pacman -S dosemu
-运行一下dosemu：1$ dosemu
-此时还不能编译汇编程序。需要我们将下载到的MASM.exe LINK.exe拷贝到d">
+<meta name="twitter:title" content="A Simple Web Server (翻译文章)">
+<meta name="twitter:description" content="介绍Web在过去的20年里大幅的改变了社会，但它的核心却改变的非常少。大多数系统仍遵循着Tim Berners-Lee 25年前制定的规则。特别的，大多数web服务器仍以和以前一样的方式处理同类的消息。本章将探索它们的实现方式。同时将探索开发者如何创建不需重写就可以添加新特性的软件系统。
+后台几乎Web上的每个程序都运行在被称为因特网协议(IP)的通信标准的家族上。家族的每个成员使用传输控制协议(">
 
 
 
@@ -96,7 +90,7 @@
   };
 </script>
 
-  <title> Linux下配置8086汇编环境 | Mocimy's Island </title>
+  <title> A Simple Web Server (翻译文章) | Mocimy's Island </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -225,7 +219,7 @@
             
             
               
-                Linux下配置8086汇编环境
+                A Simple Web Server (翻译文章)
               
             
           </h1>
@@ -237,8 +231,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-11-09T13:19:27+08:00" content="2015-11-09">
-              2015-11-09
+            <time itemprop="dateCreated" datetime="2016-03-03T11:44:15+08:00" content="2016-03-03">
+              2016-03-03
             </time>
           </span>
 
@@ -248,8 +242,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/11/09/Linux下配置8086汇编环境/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/09/Linux下配置8086汇编环境/" itemprop="commentsCount"></span>
+                <a href="/2016/03/03/A-Simple-Web-Server-翻译文章/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/03/A-Simple-Web-Server-翻译文章/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -270,34 +264,32 @@
       
 
       
-        <h1 id="准备">准备</h1><p>编写8086汇编程序需要Dos环境，我在Linux下使用了dosemu工具模拟dos环境。<br>MASM是微软开发的汇编环境，这里使用了MASM 5.0版本。</p>
-<h1 id="安装">安装</h1><p>dosemu可以通过发行版自带的包管理工具安装。在Archlinux下：<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># pacman -S dosemu</span></span><br></pre></td></tr></table></figure></p>
-<p>运行一下dosemu：<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>dosemu</span><br></pre></td></tr></table></figure></p>
-<p>此时还不能编译汇编程序。需要我们将下载到的MASM.exe LINK.exe拷贝到dosemu的工作环境下：<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">cp</span> MASM.<span class="keyword">exe</span> LINK.<span class="keyword">exe</span> ~/.dosemu/drives/<span class="keyword">d</span>/bin/</span><br></pre></td></tr></table></figure></p>
-<h1 id="编译">编译</h1><p>再次执行dosemu,可以执行MASM编译代码。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MASM test_1<span class="class">.asm</span></span><br><span class="line">LINK test_1<span class="class">.obj</span></span><br><span class="line">test_1.exe</span><br></pre></td></tr></table></figure></p>
-<p>效果如下：<br><img src="/images/test_1.png" alt="效果图"></p>
+        <h1 id="介绍">介绍</h1><p>Web在过去的20年里大幅的改变了社会，但它的核心却改变的非常少。大多数系统仍遵循着Tim Berners-Lee 25年前制定的规则。特别的，大多数web服务器仍以和以前一样的方式处理同类的消息。<br>本章将探索它们的实现方式。同时将探索开发者如何创建不需重写就可以添加新特性的软件系统。</p>
+<h1 id="后台">后台</h1><p>几乎Web上的每个程序都运行在被称为因特网协议(IP)的通信标准的家族上。家族的每个成员使用传输控制协议(TCP/IP)，使计算机间的交流看起来像读写文件。<br>程序通过socket使用IP交流。每个socket是点对点交流通道的一端，就像手机是移动通信的终端。一个Socket由机器的IP地址和端口号组成。IP地址由4个8bit数字组成，例如<code>174.136.14.108</code>;域名系统(DNS)将这些数字匹配到像<code>aosabook.org</code>这样非常适合人类记忆的名字。<br>端口号是0-65355的数字，是主机上socket的独有标识。(如果把IP地址比作公司的电话号码，那么端口号就是电话分机。) 端口0-1023被操作系统使用;任何程序都可以使用其余端口。<br>超文本传输协议(HTTP)描述了程序在IP间交换数据的方式。HTTP有意简化为:客户端发送请求指定它想到达的socket连接，然后服务器发送一些数据作为回应。数据可以被从磁盘文件拷贝，由程序动态生成，或两者兼而有之。<br><img src="http://aosabook.org/en/500L/web-server-images/http-response.png" alt="An HTTP Response"><br>版本，标题和正文具有相同的形式和意义。状态码是一串数字，它指出在请求提交的过程中发送了什么：200意味着“一切工作正常”，404意味着“没有找到页面”，其它代码有着其它意思。状态语句将信息重复为人类可以理解的语句，如”OK”或”not found”。<br>本章的目的只有两个，我们需要了解HTTP其他事情。<br>首先它是无状态的：每个请求由程序自身解决，服务器不记得一个请求和下一个请求之间的任何事。如果应用程序想跟踪一些信息，例如用户身份，它必须自行完成。<br>通常的方式是使用cookie——一种由服务器发送给客户端，再由客户端稍后返回给服务器的短字符。当用户执行一些需要状态被跨数个请求保存的动作时，服务器创建一个新的cookie，存到数据库中，再把它发送给浏览器。每当浏览器返回cookie，服务器用它来查找用户正在用的信息。</p>
 
       
     </div>
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag">#Python</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/10/11/PCL点云处理实践-三-点云的曲面重建、GUI显示/" rel="next" title="PCL点云处理实践(三):点云的曲面重建、GUI显示">
-                <i class="fa fa-chevron-left"></i> PCL点云处理实践(三):点云的曲面重建、GUI显示
+              <a href="/2016/02/26/使用uwsgi和Nginx部署Flask应用/" rel="next" title="使用uwsgi和Nginx部署Flask应用">
+                <i class="fa fa-chevron-left"></i> 使用uwsgi和Nginx部署Flask应用
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/02/26/使用uwsgi和Nginx部署Flask应用/" rel="prev" title="使用uwsgi和Nginx部署Flask应用">
-                使用uwsgi和Nginx部署Flask应用 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -312,10 +304,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2015/11/09/Linux下配置8086汇编环境/"
-     data-title="Linux下配置8086汇编环境"
+        <div class="ds-share flat" data-thread-key="2016/03/03/A-Simple-Web-Server-翻译文章/"
+     data-title="A Simple Web Server (翻译文章)"
      data-content=""
-     data-url="https://mocimy.github.io/2015/11/09/Linux下配置8086汇编环境/">
+     data-url="https://mocimy.github.io/2016/03/03/A-Simple-Web-Server-翻译文章/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -342,8 +334,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/11/09/Linux下配置8086汇编环境/"
-           data-title="Linux下配置8086汇编环境" data-url="https://mocimy.github.io/2015/11/09/Linux下配置8086汇编环境/">
+      <div class="ds-thread" data-thread-key="2016/03/03/A-Simple-Web-Server-翻译文章/"
+           data-title="A Simple Web Server (翻译文章)" data-url="https://mocimy.github.io/2016/03/03/A-Simple-Web-Server-翻译文章/">
       </div>
     
   </div>
@@ -472,7 +464,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#准备"><span class="nav-number">1.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译"><span class="nav-number">3.</span> <span class="nav-text">编译</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#后台"><span class="nav-number">2.</span> <span class="nav-text">后台</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
