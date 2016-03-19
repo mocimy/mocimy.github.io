@@ -71,7 +71,8 @@ kinect介绍Kinect是巨硬推出的一款体感外设。它可以帮助我们�
 kinect介绍Kinect是巨硬推出的一款体感外设。它可以帮助我们获取摄像头范围内的深度数据和彩色数据。
 安装
 对于kinect 1.0">
-<meta property="og:updated_time" content="2016-02-26T02:12:21.466Z">
+<meta property="og:image" content="https://mocimy.github.io/images/pcl_viewer.png">
+<meta property="og:updated_time" content="2016-03-19T06:21:09.857Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PCL点云处理实践:从kinect读取点云">
 <meta name="twitter:description" content="PCL介绍Point Cloud Library (PCL) 是一个独立的大型的处理二维/三维图像和点云数据的开源工程。PCL在三维图像处理上的地位相当于opencv在二维图像处理的地位。更多信息可查看PCL官网：http://pointclouds.org/
@@ -184,6 +185,16 @@ kinect介绍Kinect是巨硬推出的一款体感外设。它可以帮助我们�
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-heartbeat fa-fw"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
 
       
       
@@ -276,13 +287,13 @@ kinect介绍Kinect是巨硬推出的一款体感外设。它可以帮助我们�
 </blockquote>
 <p>这里使用Kinect SDK for Windows 2.0（以下简称sdk）。</p>
 <h2 id="安装sdk">安装sdk</h2><p><a href="https://dev.windows.com/en-us/kinect" target="_blank" rel="external">https://dev.windows.com/en-us/kinect</a></p>
-<h2 id="安装PCL">安装PCL</h2><p>推荐从源代码安装：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/PointCloudLibrary/pcl</span><br></pre></td></tr></table></figure></p>
+<h2 id="安装PCL">安装PCL</h2><p>推荐从源代码安装：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/PointCloudLibrary/pcl</span><br></pre></td></tr></table></figure></p>
 <p>使用cmake针对所在的平台进行编译。<br>由于windows平台解决Library问题较为麻烦，也可以使用 <a href="http://unanancyowen.com/?p=1255&amp;lang=en" target="_blank" rel="external">All in one Installer</a>。</p>
 <h2 id="下载KinectGrabber">下载KinectGrabber</h2><p>sdk本身提供了丰富的API，便于开发者实现各种功能。如手势识别、骨骼识别等。我们在这里仅使用它的基础功能——读取深度数据，并转换为我们需要的点云。</p>
 <p><a href="https://github.com/UnaNancyOwen/KinectGrabber/tree/Kinect2Grabber/Sample/Sample" target="_blank" rel="external">KinectGrabber项目地址</a></p>
 <h1 id="使用">使用</h1><h2 id="使用Kinect2Grabber">使用Kinect2Grabber</h2><p>修改Sample.cpp，将扫描的点云保存为PCD文件，以便于后续处理：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">"stdafx.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Disable Error C4996 that occur when using Boost.Signals2.</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">ifdef</span> _DEBUG</span></span><br><span class="line">	<span class="preprocessor">#<span class="keyword">define</span> _SCL_SECURE_NO_WARNINGS</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">"kinect2_grabber.h"</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;pcl/visualization/cloud_viewer.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> _tmain( <span class="keyword">int</span> argc, _TCHAR* argv[] )</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// Create Cloud Viewer</span></span><br><span class="line">	pcl::visualization::<span class="function">CloudViewer <span class="title">viewer</span><span class="params">( <span class="string">"Point Cloud Viewer"</span> )</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Callback Function to be called when Updating Data</span></span><br><span class="line">	boost::function&lt;<span class="keyword">void</span>( <span class="keyword">const</span> pcl::PointCloud&lt;pcl::PointXYZRGB&gt;::ConstPtr&amp; )&gt; function =</span><br><span class="line">		[&amp;viewer]( <span class="keyword">const</span> pcl::PointCloud&lt;pcl::PointXYZRGB&gt;::ConstPtr &amp;cloud )&#123;</span><br><span class="line">		<span class="keyword">if</span>( !viewer.wasStopped() )&#123;</span><br><span class="line">			viewer.showCloud( cloud );</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Create Kinect2Grabber</span></span><br><span class="line">	pcl::Grabber* grabber = <span class="keyword">new</span> pcl::Kinect2Grabber();</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Regist Callback Function</span></span><br><span class="line">	grabber-&gt;registerCallback( function );</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Start Retrieve Data</span></span><br><span class="line">	grabber-&gt;start();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span>( !viewer.wasStopped() )&#123;</span><br><span class="line">		<span class="comment">// Input Key ( Exit ESC key )</span></span><br><span class="line">		<span class="keyword">if</span>( GetKeyState( VK_ESCAPE ) &lt; <span class="number">0</span> )&#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Stop Retrieve Data</span></span><br><span class="line">	grabber-&gt;stop();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="预览效果">预览效果</h2><p>PCL自带的pcl_viewer工具可以帮助我们查看pcd文件。<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pcl_viewer <span class="literal">result</span>.pcd</span><br></pre></td></tr></table></figure></p>
-<p>效果如下</p>
+<h2 id="预览效果">预览效果</h2><p>PCL自带的pcl_viewer工具可以帮助我们查看pcd文件。<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pcl_viewer <span class="literal">result</span>.pcd</span><br></pre></td></tr></table></figure></p>
+<p>拍摄的单侧点云效果如下:<br><img src="/images/pcl_viewer.png" alt="单侧点云"></p>
 
       
     </div>
@@ -301,10 +312,6 @@ kinect介绍Kinect是巨硬推出的一款体感外设。它可以帮助我们�
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
-            
-              <a href="/2015/09/12/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
-              </a>
             
           </div>
 
@@ -403,7 +410,7 @@ kinect介绍Kinect是巨硬推出的一款体感外设。它可以帮助我们�
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-count">6</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

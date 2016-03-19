@@ -65,7 +65,10 @@
 <meta property="og:url" content="https://mocimy.github.io/2015/09/17/PCL点云处理实践-二-点云的处理和拼接/index.html">
 <meta property="og:site_name" content="Mocimy's Island">
 <meta property="og:description" content="点云处理滤除背景我们获得的点云可能包含一部分背景的点云。要去除背景，只保留人体信息，最简单的方式是使用直通滤波器滤除较远点。这部分代码如下：123456pcl::PassThrough&amp;lt;pcl::PointXYZ&amp;gt;pass;     //设置滤波器对象pass.setInputCloud(cloud);                //设置输入点云pass.setFilterFiel">
-<meta property="og:updated_time" content="2015-10-11T03:45:23.551Z">
+<meta property="og:image" content="http://pointclouds.org/documentation/">
+<meta property="og:image" content="https://mocimy.github.io/images/pcl_res_1.png">
+<meta property="og:image" content="https://mocimy.github.io/images/pcl_res_2.png">
+<meta property="og:updated_time" content="2016-03-19T06:53:57.741Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PCL点云处理实践(二):点云的处理和拼接">
 <meta name="twitter:description" content="点云处理滤除背景我们获得的点云可能包含一部分背景的点云。要去除背景，只保留人体信息，最简单的方式是使用直通滤波器滤除较远点。这部分代码如下：123456pcl::PassThrough&amp;lt;pcl::PointXYZ&amp;gt;pass;     //设置滤波器对象pass.setInputCloud(cloud);                //设置输入点云pass.setFilterFiel">
@@ -175,6 +178,16 @@
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-heartbeat fa-fw"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
 
       
       
@@ -270,7 +283,7 @@
 <p>PCL实现的VoxelGrid类通过输入的点云数据创建一个三维体素栅格（可把体素栅格想象为微小的空间三维立方体的集合），然后在每个体素（即，三维立方体）内，用体素中所有点的重心来近似显示体素中其他点，这样该体素就内所有点就用一个重心点最终表示，对于所有体素处理后得到过滤后的点云。<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">pcl:</span><span class="symbol">:VoxelGrid&lt;sensor_msgs</span><span class="symbol">:</span><span class="symbol">:PointCloud2&gt;sor</span>;  <span class="regexp">//</span>创建滤波对象</span><br><span class="line">sor.setInputCloud(cloud);                       <span class="regexp">//</span>设置需要过滤的点云给滤波对象</span><br><span class="line">sor.setLeafSize(<span class="number">0</span>.<span class="number">01</span>f,<span class="number">0</span>.<span class="number">01</span>f,<span class="number">0</span>.<span class="number">01</span>f);           <span class="regexp">//</span>设置滤波时创建的体素大小为<span class="number">1</span>cm立方体</span><br><span class="line">sor.filter(*cloud_filtered);                   <span class="regexp">//</span>执行滤波处理，存储输出cloud_filtered</span><br></pre></td></tr></table></figure></p>
 <h1 id="点云拼接">点云拼接</h1><h2 id="配准">配准</h2><h3 id="什么是配准">什么是配准</h3><p>配准是将一个点云找到与另一个点云相对应的部分，并得到两个点云之间的转换矩阵。</p>
 <p>配准之后,我们就可以将一个点云转换到另一个点云所在的坐标系内。在同一个坐标系内的点云可以进行拼接，形成一个更大的点云。</p>
-<p>PCL内置了许多配准算法迭代最近点对(ICP)算法，正态分布变换算法，随机一致采样(ransac)算法，等等。实际使用中，往往需要根据点云的特征选取合适的算法。本例中使用ransac算法。</p>
+<p>PCL内置了许多配准算法,例如迭代最近点对(ICP)算法，正态分布变换算法，随机一致采样(ransac)算法，等等。实际使用中，往往需要根据点云的特征选取合适的算法。这里使用了ransac算法。</p>
 <h3 id="如何提高配准的精确度">如何提高配准的精确度</h3><p>对于两个点云来说，提高精确度的方法是选取合适的算法、增加迭代次数、修改参数。</p>
 <p>实际配准中，我们可能要连续配准多个点云。这样，在两个点云匹配中出现的误差可能被放大。提供几种思路供尝试：</p>
 <blockquote>
@@ -281,7 +294,8 @@
 <li>第n个点云与第n+1个点云配准，得到转换矩阵,并将第n+1个点云乘以转换矩阵，将得到的新点云拼接上第n个点云，然后替换第n+1个点云。</li>
 </ul>
 </blockquote>
-<p>本例中采用第二种方法。</p>
+<p>本这里采用了第二种方法。<br>配准部分的代码，根据采取的算法不同有所变化，建议从<img src="http://pointclouds.org/documentation/" alt="官方文档">参看这部分代码。</p>
+<h1 id="最终效果">最终效果</h1><p>实际使用中，很难做到短时间高精度地配准出点云,对于一些情况，可能要进行有针对性的优化。这是测试中配准效果较好的一个:<br><img src="/images/pcl_res_1.png" alt="效果1"><br><img src="/images/pcl_res_2.png" alt="效果2"></p>
 
       
     </div>
@@ -402,7 +416,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-count">6</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -486,7 +500,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#点云处理"><span class="nav-number">1.</span> <span class="nav-text">点云处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#滤除背景"><span class="nav-number">1.1.</span> <span class="nav-text">滤除背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#移除离群点"><span class="nav-number">1.2.</span> <span class="nav-text">移除离群点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下采样"><span class="nav-number">1.3.</span> <span class="nav-text">下采样</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#点云拼接"><span class="nav-number">2.</span> <span class="nav-text">点云拼接</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配准"><span class="nav-number">2.1.</span> <span class="nav-text">配准</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是配准"><span class="nav-number">2.1.1.</span> <span class="nav-text">什么是配准</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何提高配准的精确度"><span class="nav-number">2.1.2.</span> <span class="nav-text">如何提高配准的精确度</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#点云处理"><span class="nav-number">1.</span> <span class="nav-text">点云处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#滤除背景"><span class="nav-number">1.1.</span> <span class="nav-text">滤除背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#移除离群点"><span class="nav-number">1.2.</span> <span class="nav-text">移除离群点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下采样"><span class="nav-number">1.3.</span> <span class="nav-text">下采样</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#点云拼接"><span class="nav-number">2.</span> <span class="nav-text">点云拼接</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配准"><span class="nav-number">2.1.</span> <span class="nav-text">配准</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是配准"><span class="nav-number">2.1.1.</span> <span class="nav-text">什么是配准</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何提高配准的精确度"><span class="nav-number">2.1.2.</span> <span class="nav-text">如何提高配准的精确度</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最终效果"><span class="nav-number">3.</span> <span class="nav-text">最终效果</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
