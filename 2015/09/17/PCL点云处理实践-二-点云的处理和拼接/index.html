@@ -65,10 +65,9 @@
 <meta property="og:url" content="https://mocimy.github.io/2015/09/17/PCL点云处理实践-二-点云的处理和拼接/index.html">
 <meta property="og:site_name" content="Mocimy's Island">
 <meta property="og:description" content="点云处理滤除背景我们获得的点云可能包含一部分背景的点云。要去除背景，只保留人体信息，最简单的方式是使用直通滤波器滤除较远点。这部分代码如下：123456pcl::PassThrough&amp;lt;pcl::PointXYZ&amp;gt;pass;     //设置滤波器对象pass.setInputCloud(cloud);                //设置输入点云pass.setFilterFiel">
-<meta property="og:image" content="http://pointclouds.org/documentation/">
 <meta property="og:image" content="https://mocimy.github.io/images/pcl_res_1.png">
 <meta property="og:image" content="https://mocimy.github.io/images/pcl_res_2.png">
-<meta property="og:updated_time" content="2016-03-19T06:53:57.741Z">
+<meta property="og:updated_time" content="2016-03-22T05:38:59.946Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PCL点云处理实践(二):点云的处理和拼接">
 <meta name="twitter:description" content="点云处理滤除背景我们获得的点云可能包含一部分背景的点云。要去除背景，只保留人体信息，最简单的方式是使用直通滤波器滤除较远点。这部分代码如下：123456pcl::PassThrough&amp;lt;pcl::PointXYZ&amp;gt;pass;     //设置滤波器对象pass.setInputCloud(cloud);                //设置输入点云pass.setFilterFiel">
@@ -178,16 +177,6 @@
           </a>
         </li>
       
-        
-        <li class="menu-item menu-item-commonweal">
-          <a href="/404.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-heartbeat fa-fw"></i> <br />
-            
-            公益404
-          </a>
-        </li>
-      
 
       
       
@@ -277,6 +266,7 @@
 <blockquote>
 <p>滤除背景也可以通过Kinect SDK实现，这部分可以参考SDK的“游戏者ID”。</p>
 </blockquote>
+<a id="more"></a>
 <h2 id="移除离群点">移除离群点</h2><p>激光扫描通常会产生密度不均匀的点云数据集。另外，测量中的误差会产生稀疏的离群点，使效果更糟。因此对每个点的邻域进行一个统计分析，并修剪掉那些不符合一定标准的点。<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">pcl:</span><span class="symbol">:StatisticalOutlierRemoval&lt;pcl</span><span class="symbol">:</span><span class="symbol">:PointXYZ&gt;</span> sor;<span class="regexp">//</span> 创建滤波器对象</span><br><span class="line">sor.setInputCloud(cloud);                        <span class="regexp">//</span>设置呆滤波的点云</span><br><span class="line">sor.setMeanK(<span class="number">50</span>);                                <span class="regexp">//</span>设置在进行统计时考虑查询点邻近点数</span><br><span class="line">sor.setStddevMulThresh(<span class="number">1.0</span>);                    <span class="regexp">//</span>设置判断是否为离群点的阈值</span><br><span class="line">sor.filter(*cloud_filtered);                    <span class="regexp">//</span>执行滤波处理保存内点到cloud_filtered</span><br></pre></td></tr></table></figure></p>
 <h2 id="下采样">下采样</h2><p>为什么要进行下采样？</p>
 <p>Kinect直接得到的点云数据非常庞大，由于我们下一步要对其进行配准和拼接处理，如果不对点云进行适当精简，运算时间可能非常长。因此，要等效一个Point较少的点云，取代原始点云进行配准操作。</p>
@@ -294,7 +284,7 @@
 <li>第n个点云与第n+1个点云配准，得到转换矩阵,并将第n+1个点云乘以转换矩阵，将得到的新点云拼接上第n个点云，然后替换第n+1个点云。</li>
 </ul>
 </blockquote>
-<p>本这里采用了第二种方法。<br>配准部分的代码，根据采取的算法不同有所变化，建议从<img src="http://pointclouds.org/documentation/" alt="官方文档">参看这部分代码。</p>
+<p>本这里采用了第二种方法。<br>配准部分的代码，根据采取的算法不同有所变化，建议从<a href="http://pointclouds.org/documentation/" target="_blank" rel="external">官方文档</a>参看这部分代码。</p>
 <h1 id="最终效果">最终效果</h1><p>实际使用中，很难做到短时间高精度地配准出点云,对于一些情况，可能要进行有针对性的优化。这是测试中配准效果较好的一个:<br><img src="/images/pcl_res_1.png" alt="效果1"><br><img src="/images/pcl_res_2.png" alt="效果2"></p>
 
       

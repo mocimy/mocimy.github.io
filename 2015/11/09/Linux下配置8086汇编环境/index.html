@@ -72,7 +72,7 @@
 运行一下dosemu：1$ dosemu
 此时还不能编译汇编程序。需要我们将下载到的MASM.exe LINK.exe拷贝到d">
 <meta property="og:image" content="https://mocimy.github.io/images/test_1.png">
-<meta property="og:updated_time" content="2015-11-09T06:52:50.014Z">
+<meta property="og:updated_time" content="2016-03-22T03:37:29.586Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux下配置8086汇编环境">
 <meta name="twitter:description" content="准备编写8086汇编程序需要Dos环境，我在Linux下使用了dosemu工具模拟dos环境。MASM是微软开发的汇编环境，这里使用了MASM 5.0版本。
@@ -185,16 +185,6 @@
           </a>
         </li>
       
-        
-        <li class="menu-item menu-item-commonweal">
-          <a href="/404.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-heartbeat fa-fw"></i> <br />
-            
-            公益404
-          </a>
-        </li>
-      
 
       
       
@@ -284,6 +274,7 @@
 <h1 id="安装">安装</h1><p>dosemu可以通过发行版自带的包管理工具安装。在Archlinux下：<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># pacman -S dosemu</span></span><br></pre></td></tr></table></figure></p>
 <p>运行一下dosemu：<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>dosemu</span><br></pre></td></tr></table></figure></p>
 <p>此时还不能编译汇编程序。需要我们将下载到的MASM.exe LINK.exe拷贝到dosemu的工作环境下：<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">cp</span> MASM.<span class="keyword">exe</span> LINK.<span class="keyword">exe</span> ~/.dosemu/drives/<span class="keyword">d</span>/bin/</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <h1 id="编译">编译</h1><p>再次执行dosemu,可以执行MASM编译代码。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MASM test_1<span class="class">.asm</span></span><br><span class="line">LINK test_1<span class="class">.obj</span></span><br><span class="line">test_1.exe</span><br></pre></td></tr></table></figure></p>
 <p>效果如下：<br><img src="/images/test_1.png" alt="效果图"></p>
 

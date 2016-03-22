@@ -72,7 +72,7 @@ kinect介绍Kinect是巨硬推出的一款体感外设。它可以帮助我们�
 安装
 对于kinect 1.0">
 <meta property="og:image" content="https://mocimy.github.io/images/pcl_viewer.png">
-<meta property="og:updated_time" content="2016-03-19T06:21:09.857Z">
+<meta property="og:updated_time" content="2016-03-22T03:37:28.659Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PCL点云处理实践:从kinect读取点云">
 <meta name="twitter:description" content="PCL介绍Point Cloud Library (PCL) 是一个独立的大型的处理二维/三维图像和点云数据的开源工程。PCL在三维图像处理上的地位相当于opencv在二维图像处理的地位。更多信息可查看PCL官网：http://pointclouds.org/
@@ -185,16 +185,6 @@ kinect介绍Kinect是巨硬推出的一款体感外设。它可以帮助我们�
           </a>
         </li>
       
-        
-        <li class="menu-item menu-item-commonweal">
-          <a href="/404.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-heartbeat fa-fw"></i> <br />
-            
-            公益404
-          </a>
-        </li>
-      
 
       
       
@@ -287,6 +277,7 @@ kinect介绍Kinect是巨硬推出的一款体感外设。它可以帮助我们�
 </blockquote>
 <p>这里使用Kinect SDK for Windows 2.0（以下简称sdk）。</p>
 <h2 id="安装sdk">安装sdk</h2><p><a href="https://dev.windows.com/en-us/kinect" target="_blank" rel="external">https://dev.windows.com/en-us/kinect</a></p>
+<a id="more"></a>
 <h2 id="安装PCL">安装PCL</h2><p>推荐从源代码安装：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/PointCloudLibrary/pcl</span><br></pre></td></tr></table></figure></p>
 <p>使用cmake针对所在的平台进行编译。<br>由于windows平台解决Library问题较为麻烦，也可以使用 <a href="http://unanancyowen.com/?p=1255&amp;lang=en" target="_blank" rel="external">All in one Installer</a>。</p>
 <h2 id="下载KinectGrabber">下载KinectGrabber</h2><p>sdk本身提供了丰富的API，便于开发者实现各种功能。如手势识别、骨骼识别等。我们在这里仅使用它的基础功能——读取深度数据，并转换为我们需要的点云。</p>

@@ -85,7 +85,7 @@ FlaskFlask是一个使用 Python 编写的轻量级 Web 应用框架。">
 
 这样的Web应用，那么Flask+uWSGI+Nginx 是你应该考虑的方案。
 FlaskFlask是一个使用 Python 编写的轻量级 Web 应用框架。">
-<meta property="og:updated_time" content="2016-03-03T10:37:05.394Z">
+<meta property="og:updated_time" content="2016-03-22T03:37:27.668Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用uwsgi和Nginx部署Flask应用">
 <meta name="twitter:description" content="部署方案任何的部署方案都不应该脱离实际需求。Flask+uWSGI+Nginx 可以应对那些高并发、高性能的页面需求。如果你需要：
@@ -205,16 +205,6 @@ FlaskFlask是一个使用 Python 编写的轻量级 Web 应用框架。">
           </a>
         </li>
       
-        
-        <li class="menu-item menu-item-commonweal">
-          <a href="/404.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-heartbeat fa-fw"></i> <br />
-            
-            公益404
-          </a>
-        </li>
-      
 
       
       
@@ -313,6 +303,7 @@ FlaskFlask是一个使用 Python 编写的轻量级 Web 应用框架。">
 <h3 id="Flask">Flask</h3><p>Flask是一个使用 Python 编写的轻量级 Web 应用框架。</p>
 <h3 id="uWSGI">uWSGI</h3><p>The uWSGI project aims at developing a full stack for building hosting services.</p>
 <h3 id="Nginx">Nginx</h3><p>Nginx 是一个高性能的HTTP和 反向代理 服务器 (这里主要用于处理静态文件)。</p>
+<a id="more"></a>
 <h1 id="部署环境">部署环境</h1><p>我们这里使用了Ubuntu 14.04 x64的VPS来部署我们的应用。</p>
 <h1 id="开始部署">开始部署</h1><h2 id="配置virtualenv">配置virtualenv</h2><p>生产环境中不同的Application往往依赖于不同的Python包。如果直接安装这些包，可能由于依赖的版本不同产生各种各样的冲突。为了避免这种情况，我们使用Virtualenv来为每个应用创建单独的虚拟环境，避免冲突。<br>Ubuntu的软件源中包含了virtualenv，可以直接安装:<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># apt-get install python-virtualenv</span></span><br></pre></td></tr></table></figure></p>
 <p>如果使用Python3：<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># apt-get install python3-virtualenv</span></span><br></pre></td></tr></table></figure></p>
