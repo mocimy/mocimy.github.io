@@ -65,9 +65,11 @@
 <meta property="og:url" content="https://mocimy.github.io/2015/09/17/PCL点云处理实践-二-点云的处理和拼接/index.html">
 <meta property="og:site_name" content="Mocimy's Island">
 <meta property="og:description" content="点云处理滤除背景我们获得的点云可能包含一部分背景的点云。要去除背景，只保留人体信息，最简单的方式是使用直通滤波器滤除较远点。这部分代码如下：123456pcl::PassThrough&amp;lt;pcl::PointXYZ&amp;gt;pass;     //设置滤波器对象pass.setInputCloud(cloud);                //设置输入点云pass.setFilterFiel">
+<meta property="og:image" content="https://mocimy.github.io/images/ransac.png">
+<meta property="og:image" content="https://mocimy.github.io/images/ransac2.png">
 <meta property="og:image" content="https://mocimy.github.io/images/pcl_res_1.png">
 <meta property="og:image" content="https://mocimy.github.io/images/pcl_res_2.png">
-<meta property="og:updated_time" content="2016-03-22T05:38:59.946Z">
+<meta property="og:updated_time" content="2016-03-22T12:35:54.684Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PCL点云处理实践(二):点云的处理和拼接">
 <meta name="twitter:description" content="点云处理滤除背景我们获得的点云可能包含一部分背景的点云。要去除背景，只保留人体信息，最简单的方式是使用直通滤波器滤除较远点。这部分代码如下：123456pcl::PassThrough&amp;lt;pcl::PointXYZ&amp;gt;pass;     //设置滤波器对象pass.setInputCloud(cloud);                //设置输入点云pass.setFilterFiel">
@@ -274,8 +276,12 @@
 <h1 id="点云拼接">点云拼接</h1><h2 id="配准">配准</h2><h3 id="什么是配准">什么是配准</h3><p>配准是将一个点云找到与另一个点云相对应的部分，并得到两个点云之间的转换矩阵。</p>
 <p>配准之后,我们就可以将一个点云转换到另一个点云所在的坐标系内。在同一个坐标系内的点云可以进行拼接，形成一个更大的点云。</p>
 <p>PCL内置了许多配准算法,例如迭代最近点对(ICP)算法，正态分布变换算法，随机一致采样(ransac)算法，等等。实际使用中，往往需要根据点云的特征选取合适的算法。这里使用了ransac算法。</p>
+<h3 id="随机抽样一致性算法(RANSAC)">随机抽样一致性算法(RANSAC)</h3><p>Wiki : <a href="https://en.wikipedia.org/wiki/RANSAC" target="_blank" rel="external">https://en.wikipedia.org/wiki/RANSAC</a></p>
+<h4 id="概述">概述</h4><p>RANSAC是“RANdom SAmple Consensus（随机抽样一致）”的缩写。它可以从一组包含“局外点”的观测数据集中，通过迭代方式估计数学模型的参数。<br>RANSAC通过反复选择数据中的一组随机子集来达成目标。被选取的子集被假设为局内点，并进行验证。<br><img src="/images/ransac.png" alt="示例"></p>
+<h4 id="算法">算法</h4><p>RANSAC算法的输入是一组观测数据，一个可以解释或者适应于观测数据的参数化模型，一些可信的参数。<br>模型对应的是空间中一个点云数据到另外一个点云数据的旋转以及平移。<br>第一步随机选取点云中的一个点对，利用其不变特征（两点距离，两点法向量夹角）作为哈希表的索引值搜索另一个点云中的一个对应点对，然后计算得到旋转及平移的参数值。<br>用得到的变换模型去测试其它点，如果某个点适用于估计的模型，认为它也是局内点。<br>用所有假设的局内点去重新估计模型,重新计算旋转及平移的参数。<br>和上一个模型进行比较:是否有更多的局内点和更小的错误率。<br>然后迭代上述过程，直到找到最好的模型,或达到迭代次数。<br><img src="/images/ransac2.png" alt="示例2"></p>
+<h4 id="优势和缺点">优势和缺点</h4><p>RANSAC的优点是它能从包含大量局外点的数据集中估计出高精度的参数。<br>RANSAC的缺点是它计算参数的迭代次数没有上限；如果设置迭代次数的上限，得到的结果可能不是最优的结果，甚至可能得到错误的结果。RANSAC只有一定的概率得到可信的模型，概率与迭代次数成正比。RANSAC的另一个缺点是它要求设置跟问题相关的阀值。</p>
 <h3 id="如何提高配准的精确度">如何提高配准的精确度</h3><p>对于两个点云来说，提高精确度的方法是选取合适的算法、增加迭代次数、修改参数。</p>
-<p>实际配准中，我们可能要连续配准多个点云。这样，在两个点云匹配中出现的误差可能被放大。提供几种思路供尝试：</p>
+<p>实际配准中，我们可能要连续配准多个点云。这样，在两个点云匹配中出现的误差可能被放大。尝试了以下几种思路：</p>
 <blockquote>
 <ul>
 <li>第n个点云与第n+1个点云配准，得到转换矩阵。将第n-1个转换矩阵乘以这个转换矩阵，得到第n个转换矩阵。第n+1个点云乘以第n个转换矩阵，得到它投影到第1个点云所在坐标系的新点云。</li>
@@ -284,7 +290,7 @@
 <li>第n个点云与第n+1个点云配准，得到转换矩阵,并将第n+1个点云乘以转换矩阵，将得到的新点云拼接上第n个点云，然后替换第n+1个点云。</li>
 </ul>
 </blockquote>
-<p>本这里采用了第二种方法。<br>配准部分的代码，根据采取的算法不同有所变化，建议从<a href="http://pointclouds.org/documentation/" target="_blank" rel="external">官方文档</a>参看这部分代码。</p>
+<p>最终选择了第二种方法，它可以达到较好的效果。<br>配准部分的代码，根据采取的算法不同有所变化，建议从<a href="http://pointclouds.org/documentation/" target="_blank" rel="external">官方文档</a>参看这部分代码。</p>
 <h1 id="最终效果">最终效果</h1><p>实际使用中，很难做到短时间高精度地配准出点云,对于一些情况，可能要进行有针对性的优化。这是测试中配准效果较好的一个:<br><img src="/images/pcl_res_1.png" alt="效果1"><br><img src="/images/pcl_res_2.png" alt="效果2"></p>
 
       
@@ -490,7 +496,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#点云处理"><span class="nav-number">1.</span> <span class="nav-text">点云处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#滤除背景"><span class="nav-number">1.1.</span> <span class="nav-text">滤除背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#移除离群点"><span class="nav-number">1.2.</span> <span class="nav-text">移除离群点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下采样"><span class="nav-number">1.3.</span> <span class="nav-text">下采样</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#点云拼接"><span class="nav-number">2.</span> <span class="nav-text">点云拼接</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配准"><span class="nav-number">2.1.</span> <span class="nav-text">配准</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是配准"><span class="nav-number">2.1.1.</span> <span class="nav-text">什么是配准</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何提高配准的精确度"><span class="nav-number">2.1.2.</span> <span class="nav-text">如何提高配准的精确度</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最终效果"><span class="nav-number">3.</span> <span class="nav-text">最终效果</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#点云处理"><span class="nav-number">1.</span> <span class="nav-text">点云处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#滤除背景"><span class="nav-number">1.1.</span> <span class="nav-text">滤除背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#移除离群点"><span class="nav-number">1.2.</span> <span class="nav-text">移除离群点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下采样"><span class="nav-number">1.3.</span> <span class="nav-text">下采样</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#点云拼接"><span class="nav-number">2.</span> <span class="nav-text">点云拼接</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配准"><span class="nav-number">2.1.</span> <span class="nav-text">配准</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是配准"><span class="nav-number">2.1.1.</span> <span class="nav-text">什么是配准</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机抽样一致性算法(RANSAC)"><span class="nav-number">2.1.2.</span> <span class="nav-text">随机抽样一致性算法(RANSAC)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#概述"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#算法"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优势和缺点"><span class="nav-number">2.1.2.3.</span> <span class="nav-text">优势和缺点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何提高配准的精确度"><span class="nav-number">2.1.3.</span> <span class="nav-text">如何提高配准的精确度</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最终效果"><span class="nav-number">3.</span> <span class="nav-text">最终效果</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
