@@ -202,7 +202,7 @@
     <link href="https://mocimy.github.io/2015/09/17/PCL%E7%82%B9%E4%BA%91%E5%A4%84%E7%90%86%E5%AE%9E%E8%B7%B5-%E4%BA%8C-%E7%82%B9%E4%BA%91%E7%9A%84%E5%A4%84%E7%90%86%E5%92%8C%E6%8B%BC%E6%8E%A5/"/>
     <id>https://mocimy.github.io/2015/09/17/PCL点云处理实践-二-点云的处理和拼接/</id>
     <published>2015-09-17T12:42:31.000Z</published>
-    <updated>2016-03-22T12:35:54.684Z</updated>
+    <updated>2016-03-27T05:33:57.287Z</updated>
     <content type="html"><![CDATA[<h1 id="点云处理">点云处理</h1><h2 id="滤除背景">滤除背景</h2><p>我们获得的点云可能包含一部分背景的点云。要去除背景，只保留人体信息，最简单的方式是使用直通滤波器滤除较远点。这部分代码如下：<br><figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pcl::PassThrough<span class="variable">&lt;pcl::PointXYZ&gt;</span><span class="built_in">pass</span>;     //设置滤波器对象</span><br><span class="line"><span class="built_in">pass</span>.<span class="built_in">set</span>InputCloud(cloud);                //设置输入点云</span><br><span class="line"><span class="built_in">pass</span>.<span class="built_in">set</span>FilterFieldName(<span class="string">"z"</span>);             //设置过滤时所需要点云类型的z字段</span><br><span class="line"><span class="built_in">pass</span>.<span class="built_in">set</span>FilterLimits(<span class="number">0.0</span>,<span class="number">1.0</span>);           //设置在过滤字段上的范围</span><br><span class="line">//<span class="built_in">pass</span>.<span class="built_in">set</span>FilterLimitsNegative (true);     //设置保留范围内的还是过滤掉范围内的</span><br><span class="line"><span class="built_in">pass</span>.filter(*cloud_filtered);              //执行滤波，保存过滤结果在cloud_filtered</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>滤除背景也可以通过Kinect SDK实现，这部分可以参考SDK的“游戏者ID”。</p>
@@ -224,7 +224,7 @@
 <blockquote>
 <ul>
 <li>第n个点云与第n+1个点云配准，得到转换矩阵。将第n-1个转换矩阵乘以这个转换矩阵，得到第n个转换矩阵。第n+1个点云乘以第n个转换矩阵，得到它投影到第1个点云所在坐标系的新点云。</li>
-<li>上一方法的改进策略:同时由第1个点云向后出发，第n个点云向后出发进行配准，最终重合。</li>
+<li>上一方法的改进策略:同时由第1个点云向后出发，第n个点云向前出发进行配准，最终重合。</li>
 <li>第n个点云与第n+1个点云配准，得到转换矩阵,并将第n+1个点云乘以转换矩阵，将得到的新点云替换第n+1个点云。</li>
 <li>第n个点云与第n+1个点云配准，得到转换矩阵,并将第n+1个点云乘以转换矩阵，将得到的新点云拼接上第n个点云，然后替换第n+1个点云。</li>
 </ul>

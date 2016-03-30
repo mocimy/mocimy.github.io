@@ -69,7 +69,7 @@
 <meta property="og:image" content="https://mocimy.github.io/images/ransac2.png">
 <meta property="og:image" content="https://mocimy.github.io/images/pcl_res_1.png">
 <meta property="og:image" content="https://mocimy.github.io/images/pcl_res_2.png">
-<meta property="og:updated_time" content="2016-03-22T12:35:54.684Z">
+<meta property="og:updated_time" content="2016-03-27T05:33:57.287Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PCL点云处理实践(二):点云的处理和拼接">
 <meta name="twitter:description" content="点云处理滤除背景我们获得的点云可能包含一部分背景的点云。要去除背景，只保留人体信息，最简单的方式是使用直通滤波器滤除较远点。这部分代码如下：123456pcl::PassThrough&amp;lt;pcl::PointXYZ&amp;gt;pass;     //设置滤波器对象pass.setInputCloud(cloud);                //设置输入点云pass.setFilterFiel">
@@ -285,7 +285,7 @@
 <blockquote>
 <ul>
 <li>第n个点云与第n+1个点云配准，得到转换矩阵。将第n-1个转换矩阵乘以这个转换矩阵，得到第n个转换矩阵。第n+1个点云乘以第n个转换矩阵，得到它投影到第1个点云所在坐标系的新点云。</li>
-<li>上一方法的改进策略:同时由第1个点云向后出发，第n个点云向后出发进行配准，最终重合。</li>
+<li>上一方法的改进策略:同时由第1个点云向后出发，第n个点云向前出发进行配准，最终重合。</li>
 <li>第n个点云与第n+1个点云配准，得到转换矩阵,并将第n+1个点云乘以转换矩阵，将得到的新点云替换第n+1个点云。</li>
 <li>第n个点云与第n+1个点云配准，得到转换矩阵,并将第n+1个点云乘以转换矩阵，将得到的新点云拼接上第n个点云，然后替换第n+1个点云。</li>
 </ul>
